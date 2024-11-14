@@ -92,7 +92,9 @@ class LoginFrame(ck.CTkFrame):
 
         if username in users and users[username] == password:
             session.set_user(username)
-            session.set_users_path(users_path)
+            path = os.path.join(users_path, username)
+            session.set_users_path(path)
+            session.save_info()
             ck.CTkLabel(self, text="Login successful", text_color="green").pack()
             self.switch_frame_callback("desktop")
         else:

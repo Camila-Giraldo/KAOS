@@ -2,8 +2,6 @@ import customtkinter as ck
 import os
 from SessionManager import SessionManager
 
-images_path = os.path.join(os.path.dirname(__file__), "images")
-
 class Explorer(ck.CTk):
     def __init__(self):
         super().__init__()
@@ -11,10 +9,7 @@ class Explorer(ck.CTk):
         self.geometry("800x600")
         self.resizable(False, False)
 
-        self.username = SessionManager.get_user()
-        self.users_path = SessionManager.get_path()
-
-        self.user_path = os.path.join(self.users_path, f"{self.username}")
+        self.session = SessionManager()
 
         self.folders_frame = ck.CTkFrame(self, width=200, height=400)
         self.folders_frame.pack(pady=20, padx=20, fill="both", expand=True)
@@ -32,14 +27,21 @@ class Explorer(ck.CTk):
             ):
                 widget.destroy()
 
+        user, path = self.validate_session()
         # Obtener las carpetas del usuario y mostrarlas en etiquetas
-        folders = os.listdir(self.user_path)
+        folders = os.listdir(path)
         for folder in folders:
-            folder_path = os.path.join(self.user_path, folder)
+            folder_path = os.path.join(path, folder)
             if os.path.isdir(folder_path):  # Verifica que sea una carpeta
                 folder_label = ck.CTkLabel(self.folders_frame, text=folder)
                 folder_label.pack(anchor="w", padx=10, pady=5)
 
+    def validate_session(self):
+        info = self.session.load_session()
+        if isinstance(info, dict) and info:
+            last_user, last_path = list(info.items())[-1]
+            return last_user, last_path
+        return "", ""
 
 if __name__ == "__main__":
     app = Explorer()
