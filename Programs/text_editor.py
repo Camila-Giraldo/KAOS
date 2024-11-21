@@ -1,12 +1,13 @@
 import tkinter as tk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
+from SessionManager import SessionManager
 
 class EditorTextoAplicacion(tk.Frame):
 
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
-
+        self.session = SessionManager()
         self.inicializar_gui()
     
     def inicializar_gui(self):
@@ -23,7 +24,12 @@ class EditorTextoAplicacion(tk.Frame):
         self.area_texto.grid(row=0, column=1, sticky='nsew')
     
     def abrir_archivo(self):
-        ruta_archivo = askopenfilename(filetypes=[('Archivo de texto', ('*.txt'))])
+        info = self.session.load_session()
+        ruta_archivo = ""
+        if info:
+            last_user, last_path = list(info.items())[-1]
+            ruta = last_path
+            ruta_archivo = askopenfilename(initialdir=ruta, filetypes=[('Archivo de texto', ('*.txt'))])
 
         if not ruta_archivo:
             return
@@ -37,7 +43,12 @@ class EditorTextoAplicacion(tk.Frame):
         self.master.title(f'Editor de texto - {ruta_archivo}')
 
     def guardar_archivo(self):
-        ruta_archivo = asksaveasfilename(defaultextension='txt', filetypes=[('Archivos de texto', '*.txt')])
+        info = self.session.load_session()
+        ruta_archivo = ""
+        if info:
+            last_user, last_path = list(info.items())[-1]
+            ruta = last_path
+            ruta_archivo = asksaveasfilename(initialdir=ruta, defaultextension='txt', filetypes=[('Archivos de texto', '*.txt')])
 
         if not ruta_archivo:
             return

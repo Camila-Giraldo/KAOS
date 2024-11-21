@@ -1,6 +1,9 @@
 import customtkinter as ck
 import os
+from PIL import Image, ImageTk
 from SessionManager import SessionManager
+
+images_path = os.path.join(os.path.dirname(__file__), "images")
 
 class Explorer(ck.CTk):
     def __init__(self):
@@ -33,7 +36,25 @@ class Explorer(ck.CTk):
         for folder in folders:
             folder_path = os.path.join(path, folder)
             if os.path.isdir(folder_path):  # Verifica que sea una carpeta
-                folder_label = ck.CTkLabel(self.folders_frame, text=folder)
+                # Cargar la imagen del icono de carpeta
+                try:
+                    icon_image = Image.open(".explorer.png")
+                    icon_image = icon_image.resize((20, 20))  # Ajustar tamaño del icono
+                    icon_image = ImageTk.PhotoImage(icon_image)
+                except Exception as e:
+                    print(f"Error al cargar la imagen del icono: {e}")
+                    icon_image = None
+
+                # Crear el Label con imagen y texto
+                folder_label = ck.CTkLabel(
+                    self.folders_frame,
+                    text=folder,
+                    image=icon_image,
+                    compound="left",  # Combina imagen a la izquierda del texto
+                    padx=10,
+                    pady=5,
+                )
+                folder_label.image = icon_image  # Prevenir que se elimine la referencia
                 folder_label.pack(anchor="w", padx=10, pady=5)
 
     def validate_session(self):

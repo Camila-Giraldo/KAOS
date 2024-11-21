@@ -41,7 +41,6 @@ class SessionManager:
 
     @classmethod
     def save_info(cls):
-        session = cls.load_session()
-        session[cls.get_user()] = cls.get_path()
+        session = {cls.get_user(): cls.get_path()}
         cls.save_session(session)
 

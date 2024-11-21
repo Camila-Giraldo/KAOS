@@ -174,36 +174,16 @@ def backspace():
         if len(num) == 0:
             num = "0"
         screen.config(text=num)
-
-def factorial():
-    num = screen.cget("text")
-    
-
-    if float(num).is_integer() == False:
-        screen.config(text="Error")
-    else:
-        n = int(num)
-        if n < 0:
-            screen.config(text="Error")
-        elif n == 0 or n == 1:
-            screen.config(text="1")
-        
-        else:
-            result = 1
-            for i in range(2, n + 1):
-                result *= i
-            screen.config(text=str(result))
         
 root = tk.Tk()
 root.resizable(False, False)
 root.geometry("347x619+770+228")
 root.title("Calculadora Científica")
-root.configure(bg="#163020")
+root.configure(bg="#E5E1DA")
 
-##########################screen############################
 
 # Creación de la screen
-screen = tk.Label(root, text="0", font=("Calibri", 25), bg="#F9E8D9", width=18, justify="right")
+screen = tk.Label(root, text="0", font=("Calibri", 25), bg="#FBFBFB", width=18, justify="right")
 screen.place(x=20, y=20)
 
 # Función para crear botones numéricos y operadores
@@ -213,34 +193,32 @@ def create_button(text, x, y, command, color):
 # Posiciones y comandos para los botones numéricos y operadores
 button_positions = [
 
-    ("CE", 10, 100, lambda: cleaner(), "#EE7214"),  # Color para borrar la entrada actual
-    ("C", 120, 100, lambda: clean(), "#EE7214"),   # Color para borrar toda la operación
-    ("⌫", 230, 100, backspace, "#EE7214"),         # Color para retroceder un carácter
+    ("CE", 10, 100, lambda: cleaner(), "#89A8B2"),  # Color para borrar la entrada actual
+    ("C", 120, 100, lambda: clean(), "#89A8B2"),   # Color para borrar toda la operación
+    ("⌫", 230, 100, backspace, "#89A8B2"),         # Color para retroceder un carácter
 
-    ("+", 230, 150, lambda: numer("+"), "#637E76"),  # Color para operación suma
-    ("-", 230, 200, lambda: numer("-"), "#637E76"),  # Color para operación resta
-    ("x", 230, 250, lambda: numer("*"), "#637E76"),  # Color para operación multiplicación
-    ("/", 230, 300, lambda: numer("/"), "#637E76"),
+    ("+", 230, 150, lambda: numer("+"), "#89A8B2"),  # Color para operación suma
+    ("-", 230, 200, lambda: numer("-"), "#89A8B2"),  # Color para operación resta
+    ("x", 230, 250, lambda: numer("*"), "#89A8B2"),  # Color para operación multiplicación
+    ("/", 230, 300, lambda: numer("/"), "#89A8B2"),
 
-    ("(", 10, 300, lambda: numer("("), "#637E76"),   # Color para paréntesis izquierdo
-    (")", 120, 300, lambda: numer(")"), "#637E76"),  # Color para paréntesis derecho
+    ("(", 10, 300, lambda: numer("("), "#89A8B2"),   # Color para paréntesis izquierdo
+    (")", 120, 300, lambda: numer(")"), "#89A8B2"),  # Color para paréntesis derecho
     
     # Números
-    ("1", 10, 350, lambda: numer("1"), "#F9E8D9"),
-    ("2", 120, 350, lambda: numer("2"), "#F9E8D9"),
-    ("3", 230, 350, lambda: numer("3"), "#F9E8D9"),
-    ("4", 10, 400, lambda: numer("4"), "#F9E8D9"),
-    ("5", 120, 400, lambda: numer("5"), "#F9E8D9"),
-    ("6", 230, 400, lambda: numer("6"), "#F9E8D9"),
-    ("7", 10, 450, lambda: numer("7"), "#F9E8D9"),
-    ("8", 120, 450, lambda: numer("8"), "#F9E8D9"),
-    ("9", 230, 450, lambda: numer("9"), "#F9E8D9"),
+    ("1", 10, 350, lambda: numer("1"), "#F1F0E8"),
+    ("2", 120, 350, lambda: numer("2"), "#F1F0E8"),
+    ("3", 230, 350, lambda: numer("3"), "#F1F0E8"),
+    ("4", 10, 400, lambda: numer("4"), "#F1F0E8"),
+    ("5", 120, 400, lambda: numer("5"), "#F1F0E8"),
+    ("6", 230, 400, lambda: numer("6"), "#F1F0E8"),
+    ("7", 10, 450, lambda: numer("7"), "#F1F0E8"),
+    ("8", 120, 450, lambda: numer("8"), "#F1F0E8"),
+    ("9", 230, 450, lambda: numer("9"), "#F1F0E8"),
 
-    ("0", 10, 500, lambda: numer("0"), "#F9E8D9"),  # Color para el número cero
-    (".", 120, 500, lambda: DOT(), "#637E76"),      # Color para el punto decimal
-    ("=", 230, 500, lambda: equal(), "#F9E8D9"),
-    ("!", 230, 550, lambda: factorial(), "#F9E8D9"),    # Color para el botón de igual
-    # ... Otros botones
+    ("0", 10, 500, lambda: numer("0"), "#F1F0E8"),  # Color para el número cero
+    (".", 120, 500, lambda: DOT(), "#89A8B2"),      # Color para el punto decimal
+    ("=", 230, 500, lambda: equal(), "#9EDF9C")  # Color para el botón de igual
 ]
 
 # Creación de los botones numéricos y operadores
@@ -249,12 +227,12 @@ for text, x, y, command, color in button_positions:
 
 # Posiciones y comandos para los botones científicos
 scientific_button_positions = [
-    ("SIN", 10, 150, sin, "#E75151"),
-    ("COS", 120, 150, cos, "#E75151"),
-    ("TAN", 10, 200, tan, "#E75151"),
-    ("LOG", 120, 200, log, "#E75151"),
-    ("EXP", 10, 250, exp, "#E75151"),    
-    ("Π", 120, 250, lambda: pi(), "#E75151")
+    ("SIN", 10, 150, sin, "#D8DBBD"),
+    ("COS", 120, 150, cos, "#D8DBBD"),
+    ("TAN", 10, 200, tan, "#D8DBBD"),
+    ("LOG", 120, 200, log, "#D8DBBD"),
+    ("EXP", 10, 250, exp, "#D8DBBD"),    
+    ("Π", 120, 250, lambda: pi(), "#D8DBBD")
     # ... Otros botones científicos
 ]
 
