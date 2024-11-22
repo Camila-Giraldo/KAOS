@@ -38,7 +38,7 @@ class Explorer(ck.CTk):
             if os.path.isdir(folder_path):  # Verifica que sea una carpeta
                 # Cargar la imagen del icono de carpeta
                 try:
-                    icon_image = Image.open(".explorer.png")
+                    icon_image = Image.open("images\\explorer.png")
                     icon_image = icon_image.resize((20, 20))  # Ajustar tamaño del icono
                     icon_image = ImageTk.PhotoImage(icon_image)
                 except Exception as e:
