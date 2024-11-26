@@ -42,6 +42,18 @@ class EditorTextoAplicacion(tk.Frame):
         
         self.master.title(f'Editor de texto - {ruta_archivo}')
 
+    def abrir_archivo(self, ruta):
+        if not ruta:
+            return
+
+        self.area_texto.delete(1.0, tk.END)
+
+        with open(ruta, 'r', encoding='utf-8') as f:
+            contenido = f.read()
+            self.area_texto.insert(tk.END, contenido)
+
+        self.master.title(f'Editor de texto - {ruta}')
+
     def guardar_archivo(self):
         info = self.session.load_session()
         ruta_archivo = ""
