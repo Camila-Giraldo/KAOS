@@ -20,7 +20,7 @@ class Programs:
     def list_active_processes(self):
         """Devuelve un diccionario de procesos activos y su estado."""
         return {
-            name: "Activo" if process.poll() is None else "Finalizado"
+            name: "Active" if process.poll() is None else "Finished"
             for name, process in self.processes.items()
         }
 
@@ -28,7 +28,7 @@ class Programs:
         process = self.processes.get(program_name)
         if process and process.poll() is None:
             process.terminate()
-            return f"{program_name.capitalize()} terminado."
+            return f"{program_name.capitalize()} Finished."
         else:
             return f"{program_name.capitalize()} no está activo o ya ha finalizado."
 
@@ -68,16 +68,6 @@ class TaskManagerGUI(ctk.CTk):
         )
         self.button_refresh.pack(pady=5)
 
-        self.button_terminate_selected = ctk.CTkButton(
-            self, text="Terminar Seleccionado", command=self.terminate_selected_process
-        )
-        self.button_terminate_selected.pack(pady=5)
-
-        self.button_terminate_all = ctk.CTkButton(
-            self, text="Terminar Todos", command=self.terminate_all_processes
-        )
-        self.button_terminate_all.pack(pady=5)
-
         self.refresh_processes()  # Inicializar la lista de procesos al iniciar la GUI
 
     def refresh_processes(self):
@@ -89,31 +79,4 @@ class TaskManagerGUI(ctk.CTk):
         for name, status in processes.items():
             self.process_listbox.insert(
                 "end", f"{name.capitalize()}: {status}\n"
-            )  # Insertar el estado en el Textbox
-
-    def terminate_selected_process(self):
-        """Termina el proceso seleccionado en el Textbox."""
-        try:
-            selected_text = (
-                self.process_listbox.get("sel.first", "sel.last")
-                .strip()
-                .split(":")[0]
-                .lower()
-            )  # Obtener el nombre del proceso seleccionado
-            message = self.programs.terminate_program(
-                selected_text
-            )  # Terminar el proceso
-            ctk.CTkMessagebox.showinfo("Info", message)  # Mostrar mensaje
-            self.refresh_processes()  # Refrescar la lista de procesos
-        except (
-            ctk.CTkTextbox.SelectionError
-        ):  # Manejo de excepción si no hay texto seleccionado
-            ctk.CTkMessagebox.showwarning(
-                "Advertencia", "Selecciona un proceso para terminar."
             )
-
-    def terminate_all_processes(self):
-        """Termina todos los procesos activos."""
-        message = self.programs.terminate_all()
-        ctk.CTkMessagebox.showinfo("Info", message)  # Mostrar mensaje
-        self.refresh_processes()  # Refrescar la lista de procesos

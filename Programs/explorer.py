@@ -16,11 +16,28 @@ class Explorer(ck.CTk):
 
         self.session = SessionManager()
 
-        self.folders_frame = ck.CTkFrame(self, width=200, height=400)
+        title_label = ck.CTkLabel(self, text=f"Carpetas del Usuario", font=("Roboto", 20))
+        title_label.pack(pady=10)
+
+        home_image = ck.CTkImage(
+            light_image=Image.open("images\\home.png"),
+            dark_image=Image.open("images\\home.png"),
+            size=(40, 40)
+        )
+        # Botón que lleva a las carpetas principales del usuario
+        home_button = ck.CTkButton(
+                    self,
+                    text="",
+                    image=home_image,
+                    command=self.principal_route,
+                    fg_color = "transparent",
+                    hover = False,
+        )
+        home_button.pack(anchor="n", pady=10, padx=10)
+
+        self.folders_frame = ck.CTkFrame(self, width=200, height=400, fg_color="transparent")
         self.folders_frame.pack(pady=20, padx=20, fill="both", expand=True)
 
-        title_label = ck.CTkLabel(self.folders_frame, text="Carpetas del usuario")
-        title_label.pack(pady=10)
         self.display_folders()
 
     def display_folders(self, path=None):
@@ -102,6 +119,13 @@ class Explorer(ck.CTk):
             last_user, last_path = list(info.items())[-1]
             return last_user, last_path
         return "", ""
+
+    def principal_route(self):
+        _, route = self.validate_session()
+        if route:
+            for widget in self.folders_frame.winfo_children():
+                widget.destroy()
+            self.open_folder(route)
 
 if __name__ == "__main__":
     app = Explorer()
