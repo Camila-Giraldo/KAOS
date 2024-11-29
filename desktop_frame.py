@@ -5,9 +5,10 @@ from datetime import datetime
 from task_admin import Programs
 from task_admin import TaskManagerGUI
 from config import IMAGES_PATH
+from config import PROGRAMS_PATH
 
 images_path = IMAGES_PATH
-programs_path = os.path.join(os.path.dirname(__file__), "Programs")
+programs_path = PROGRAMS_PATH
 
 
 class DesktopFrame(ck.CTkFrame):

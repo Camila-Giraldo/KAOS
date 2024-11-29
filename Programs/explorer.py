@@ -5,7 +5,8 @@ import tkinter as tk
 from SessionManager import SessionManager
 from text_editor import EditorTextoAplicacion
 
-def open_file(path):
+
+def open_editor(path):
     root = tk.Tk()
     root.title('Editor de texto')
     root.geometry('480x400')
@@ -98,7 +99,7 @@ class Explorer(ck.CTk):
                     self.folders_frame,
                     text=folder,
                     image=icon_image,
-                    command=lambda p=folder_path: open_file(p),
+                    command=lambda p=folder_path: open_editor(p),
                     text_color="black",
                     fg_color="transparent",
                     hover=False,
