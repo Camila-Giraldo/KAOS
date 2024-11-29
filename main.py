@@ -2,8 +2,9 @@ import customtkinter as ck
 import os
 from login_frame import LoginFrame
 from desktop_frame import DesktopFrame
+from config import IMAGES_PATH
 
-images_path = os.path.join(os.path.dirname(__file__), "images")
+images_path = IMAGES_PATH
 
 
 class MainApp(ck.CTk):

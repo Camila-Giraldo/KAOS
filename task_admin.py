@@ -46,6 +46,21 @@ class Programs:
     def text_editor(self):
         self._launch_program("text_editor")
 
+    def videogame(self):
+        self._launch_program("videogame")
+
+    def videos(self):
+        self._launch_program("video")
+
+    def gallery(self):
+        self._launch_program("gallery")
+
+    def music(self):
+        self._launch_program("music")
+
+    def chrome(self):
+        self._launch_program("chrome")
+
 
 class TaskManagerGUI(ctk.CTk):
     def __init__(self, programs):

@@ -4,9 +4,10 @@ import os
 import json
 from hashlib import sha256
 from SessionManager import SessionManager
+from config import IMAGES_PATH
 
 
-images_path = os.path.join(os.path.dirname(__file__), "images")
+images_path = IMAGES_PATH
 users_file = os.path.join(os.path.dirname(__file__), "users.json")
 users_path = os.path.join(os.path.dirname(__file__), "Users")
 session = SessionManager()

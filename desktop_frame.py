@@ -4,8 +4,9 @@ import os
 from datetime import datetime
 from task_admin import Programs
 from task_admin import TaskManagerGUI
+from config import IMAGES_PATH
 
-images_path = os.path.join(os.path.dirname(__file__), "images")
+images_path = IMAGES_PATH
 programs_path = os.path.join(os.path.dirname(__file__), "Programs")
 
 
@@ -35,6 +36,11 @@ class DesktopFrame(ck.CTkFrame):
             ("text_editor.png", self.programs.text_editor),
             ("explorer.png", self.programs.explorer),
             ("task_admin.png", self.task_admin),
+            ("tic-tac-toe.png", self.programs.videogame),
+            ("video.png", self.programs.videos),
+            ("chrome.png", self.programs.chrome),
+            ("gallery.png", self.programs.gallery),
+            ("music.png", self.programs.music),
         ]
         for icon_name, action in icons_data:
             img = ck.CTkImage(

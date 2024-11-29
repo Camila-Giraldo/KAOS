@@ -5,7 +5,13 @@ import tkinter as tk
 from SessionManager import SessionManager
 from text_editor import EditorTextoAplicacion
 
-images_path = os.path.join(os.path.dirname(__file__), "images")
+def open_file(path):
+    root = tk.Tk()
+    root.title('Editor de texto')
+    root.geometry('480x400')
+    text_editor = EditorTextoAplicacion(root)
+    text_editor.abrir_archivo(path)
+
 
 class Explorer(ck.CTk):
     def __init__(self):
@@ -92,26 +98,24 @@ class Explorer(ck.CTk):
                     self.folders_frame,
                     text=folder,
                     image=icon_image,
-                    command=lambda p=folder_path: self.open_file(p),
+                    command=lambda p=folder_path: open_file(p),
                     text_color="black",
                     fg_color="transparent",
                     hover=False,
                 )
                 folder_label.image = icon_image
                 folder_label.pack(anchor="w", padx=10, pady=10)
+            else:
+                for widget in self.folders_frame.winfo_children():
+                    widget.destroy()
 
     def open_folder(self, path):
+        for widget in self.folders_frame.winfo_children():
+            widget.destroy()
         if os.path.isdir(path):  # Verificar que sea un directorio
             self.display_folders(path)
         else:
             print("No se puede abrir, no es una carpeta.")
-
-    def open_file(self, path):
-        root = tk.Tk()
-        root.title('Editor de texto')
-        root.geometry('480x400')
-        text_editor = EditorTextoAplicacion(root)
-        text_editor.abrir_archivo(path)
 
     def validate_session(self):
         info = self.session.load_session()
