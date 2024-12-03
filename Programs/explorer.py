@@ -4,14 +4,23 @@ from PIL import Image, ImageTk
 import tkinter as tk
 from SessionManager import SessionManager
 from text_editor import EditorTextoAplicacion
+from music import MusicPlayer
 
 
-def open_editor(path):
-    root = tk.Tk()
-    root.title('Editor de texto')
-    root.geometry('480x400')
-    text_editor = EditorTextoAplicacion(root)
-    text_editor.abrir_archivo(path)
+def open_file(path):
+    if os.path.splitext(path)[1] == '.txt':
+        root = tk.Tk()
+        root.title('Editor de texto')
+        root.geometry('480x400')
+        text_editor = EditorTextoAplicacion(root)
+        text_editor.abrir_archivo(path)
+    elif os.path.splitext(path)[1] == '.mp3':
+        print(path)
+        root = tk.Tk()
+        music_player = MusicPlayer(root)
+        music_player.open_file_exp(path)
+    else:
+        print("Archivo no reconocido")
 
 
 class Explorer(ck.CTk):
@@ -31,7 +40,6 @@ class Explorer(ck.CTk):
             dark_image=Image.open("images\\home.png"),
             size=(40, 40)
         )
-        # Botón que lleva a las carpetas principales del usuario
         home_button = ck.CTkButton(
                     self,
                     text="",
@@ -62,17 +70,14 @@ class Explorer(ck.CTk):
         folders = os.listdir(path)
         for folder in folders:
             folder_path = os.path.join(path, folder)
-            if os.path.isdir(folder_path):  # Verifica que sea una carpeta
-                # Cargar la imagen del icono de carpeta
+            if os.path.isdir(folder_path):
                 try:
                     icon_image = Image.open("images\\explorer.png")
-                    icon_image = icon_image.resize((20, 20))  # Ajustar tamaño del icono
+                    icon_image = icon_image.resize((20, 20))
                     icon_image = ImageTk.PhotoImage(icon_image)
                 except Exception as e:
                     print(f"Error al cargar la imagen del icono: {e}")
                     icon_image = None
-
-                # Crear el Label con imagen y texto
 
                 folder_label = ck.CTkButton(
                     self.folders_frame,
@@ -83,37 +88,67 @@ class Explorer(ck.CTk):
                     fg_color = "transparent",
                     hover = False,
                 )
-                folder_label.image = icon_image  # Prevenir que se elimine la referencia
+                folder_label.image = icon_image
                 folder_label.pack(anchor="w", padx=10, pady=5)
             elif os.path.isfile(folder_path):
-                try:
-                    icon_image = Image.open("images\\file.png")
-                    icon_image = icon_image.resize((20, 20))  # Ajustar tamaño del icono
-                    icon_image = ImageTk.PhotoImage(icon_image)
-                except Exception as e:
-                    print(f"Error al cargar la imagen del icono: {e}")
-                    icon_image = None
-
-                # Crear el Label con imagen y texto
-                folder_label = ck.CTkButton(
-                    self.folders_frame,
-                    text=folder,
-                    image=icon_image,
-                    command=lambda p=folder_path: open_editor(p),
-                    text_color="black",
-                    fg_color="transparent",
-                    hover=False,
-                )
-                folder_label.image = icon_image
-                folder_label.pack(anchor="w", padx=10, pady=10)
+                if os.path.splitext(folder_path)[1] == ".txt":
+                    try:
+                        icon_image = Image.open("images\\file.png")
+                        icon_image = icon_image.resize((20, 20))
+                        icon_image = ImageTk.PhotoImage(icon_image)
+                    except Exception as e:
+                        print(f"Error al cargar la imagen del icono: {e}")
+                        icon_image = None
+                    self.create_button(folder, icon_image, folder_path)
+                elif os.path.splitext(folder_path)[1] == ".mp3":
+                    try:
+                        icon_image = Image.open("images\\music.png")
+                        icon_image = icon_image.resize((20, 20))
+                        icon_image = ImageTk.PhotoImage(icon_image)
+                    except Exception as e:
+                        print(f"Error al cargar la imagen del icono: {e}")
+                        icon_image = None
+                    self.create_button(folder, icon_image, folder_path)
+                elif os.path.splitext(folder_path)[1] == ".png" or os.path.splitext(folder_path)[1] == ".jpg":
+                    try:
+                        icon_image = Image.open("images\\gallery.png")
+                        icon_image = icon_image.resize((20, 20))
+                        icon_image = ImageTk.PhotoImage(icon_image)
+                    except Exception as e:
+                        print(f"Error al cargar la imagen del icono: {e}")
+                        icon_image = None
+                    self.create_button(folder, icon_image, folder_path)
+                elif os.path.splitext(folder_path)[1] == ".mp4":
+                    try:
+                        icon_image = Image.open("images\\video.png")
+                        icon_image = icon_image.resize((20, 20))
+                        icon_image = ImageTk.PhotoImage(icon_image)
+                    except Exception as e:
+                        print(f"Error al cargar la imagen del icono: {e}")
+                        icon_image = None
+                    self.create_button(folder, icon_image, folder_path)
+                else:
+                    ck.CTkLabel(self.folders_frame, compound="center", text="Archivo no reconocido").pack()
             else:
-                for widget in self.folders_frame.winfo_children():
-                    widget.destroy()
+                ck.CTkLabel(self.folders_frame, compound="center", text="No hay archivos o carpetas en esta ruta").pack()
+
+    def create_button(self, folder, img, path):
+        folder_label = ck.CTkButton(
+            self.folders_frame,
+            text=folder,
+            image=img,
+            command=lambda p=path: open_file(p),
+            text_color="black",
+            fg_color="transparent",
+            hover=False,
+        )
+        folder_label.image = img
+        folder_label.pack(anchor="w", padx=10, pady=10)
 
     def open_folder(self, path):
         for widget in self.folders_frame.winfo_children():
             widget.destroy()
-        if os.path.isdir(path):  # Verificar que sea un directorio
+        if os.path.isdir(path):
             self.display_folders(path)
         else:
             print("No se puede abrir, no es una carpeta.")

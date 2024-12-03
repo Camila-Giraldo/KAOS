@@ -10,6 +10,7 @@ images_path = IMAGES_PATH
 class MainApp(ck.CTk):
     def __init__(self):
         super().__init__()
+        self.frames = None
         self.title("KAOS")
         self.iconbitmap(os.path.join(images_path, "logo.ico"))
         self.geometry(f"{self.winfo_screenwidth()}x{self.winfo_screenheight()}+0+0")

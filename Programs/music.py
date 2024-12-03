@@ -102,6 +102,16 @@ class MusicPlayer(tkinter.Frame):
             )
         self.pos = 0
         if self.direction:
+            print(self.direction)
+            self.update_song()
+
+    def open_file_exp(self, path):
+        if not path:
+            return
+
+        self.direction = (path,)
+        self.pos = 0
+        if self.direction:
             self.update_song()
 
     def start(self):
