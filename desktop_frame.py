@@ -20,7 +20,7 @@ class DesktopFrame(ck.CTkFrame):
 
         # Background image
         bg_img = Image.open(os.path.join(images_path, "desktop.png")).resize(
-            (screen_width, screen_height), Image.LANCZOS
+            (screen_width, screen_height), Image.Resampling.LANCZOS
         )
         background = ImageTk.PhotoImage(bg_img)
         ck.CTkLabel(self, image=background, text="").place(

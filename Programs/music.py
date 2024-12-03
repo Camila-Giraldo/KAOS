@@ -1,9 +1,7 @@
-import os
 import random
 import tkinter
 import pygame
-from PIL import Image, ImageTk
-from tkinter import Tk, Button, Label, filedialog, PhotoImage, Frame, Image
+from tkinter import Tk, Button, Label, filedialog, Frame
 from tkinter import ttk
 from SessionManager import SessionManager
 from config import IMAGES_PATH
