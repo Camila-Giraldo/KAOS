@@ -10,12 +10,9 @@ from music import MusicPlayer
 def open_file(path):
     if os.path.splitext(path)[1] == '.txt':
         root = tk.Tk()
-        root.title('Editor de texto')
-        root.geometry('480x400')
         text_editor = EditorTextoAplicacion(root)
         text_editor.abrir_archivo(path)
     elif os.path.splitext(path)[1] == '.mp3':
-        print(path)
         root = tk.Tk()
         music_player = MusicPlayer(root)
         music_player.open_file_exp(path)

@@ -4,16 +4,19 @@ from SessionManager import SessionManager
 
 class EditorTextoAplicacion(tk.Frame):
 
-    def __init__(self, master=None):
-        super().__init__(master)
-        self.master = master
+    def __init__(self, root):
+        super().__init__(root)
+        self.root = root
+        self.root.title('Editor de texto')
+        self.root.geometry('480x400')
+
         self.session = SessionManager()
         self.inicializar_gui()
     
     def inicializar_gui(self):
-        self.area_texto = tk.Text(self.master)
+        self.area_texto = tk.Text(self.root)
         
-        frm_botones = tk.Frame(self.master, relief=tk.RAISED, bd=2)
+        frm_botones = tk.Frame(self.root, relief=tk.RAISED, bd=2)
         btn_abrir = tk.Button(frm_botones, text='Abrir...', command=self.abrir_archivo)
         btn_guardar = tk.Button(frm_botones, text='Guardar...', command=self.guardar_archivo)
 
@@ -40,7 +43,7 @@ class EditorTextoAplicacion(tk.Frame):
             contenido = f.read()
             self.area_texto.insert(tk.END, contenido)
         
-        self.master.title(f'Editor de texto - {ruta_archivo}')
+        self.root.title(f'Editor de texto - {ruta_archivo}')
 
     def abrir_archivo(self, ruta):
         if not ruta:
@@ -52,7 +55,7 @@ class EditorTextoAplicacion(tk.Frame):
             contenido = f.read()
             self.area_texto.insert(tk.END, contenido)
 
-        self.master.title(f'Editor de texto - {ruta}')
+        self.root.title(f'Editor de texto - {ruta}')
 
     def guardar_archivo(self):
         info = self.session.load_session()
@@ -69,13 +72,10 @@ class EditorTextoAplicacion(tk.Frame):
             contenido = self.area_texto.get(1.0, tk.END)
             f.write(contenido)
         
-        self.master.title(f'Editor de texto - {ruta_archivo}')
+        self.root.title(f'Editor de texto - {ruta_archivo}')
 
 def main():
     root = tk.Tk()
-    root.title('Editor de texto')
-    root.geometry('480x400')
-
     ventana = EditorTextoAplicacion(root)
     ventana.mainloop()
 
