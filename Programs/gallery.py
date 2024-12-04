@@ -13,11 +13,9 @@ class ImageViewerApp(tk.Frame):
 
         self.session = SessionManager()
 
-        # Botón para cargar imagen
-        self.load_button = tk.Button(root, text="Cargar Imagen", command=self.load_image)
+        self.load_button = tk.Button(root, text="Open Image", command=self.load_image)
         self.load_button.pack(pady=10)
 
-        # Etiqueta para mostrar la imagen
         self.image_label = tk.Label(root)
         self.image_label.pack(pady=20)
 
@@ -33,16 +31,13 @@ class ImageViewerApp(tk.Frame):
             )
 
         if file_path:
-            # Cargar la imagen usando Pillow
             image = Image.open(file_path)
 
             # Redimensionar la imagen si es muy grande
             image = image.resize((700, 500), Image.Resampling.LANCZOS)
 
-            # Convertir la imagen para mostrarla en el label
             self.photo = ImageTk.PhotoImage(image)
 
-            # Mostrar la imagen en el label
             self.image_label.config(image=self.photo)
             self.image_label.image = self.photo  # Mantener la referencia para evitar que se elimine
 
