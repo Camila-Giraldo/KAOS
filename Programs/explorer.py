@@ -3,21 +3,26 @@ import os
 from PIL import Image, ImageTk
 import tkinter as tk
 from SessionManager import SessionManager
-from text_editor import EditorTextoAplicacion
+from text_editor import TextEditor
 from music import MusicPlayer
+from gallery import ImageViewerApp
 
 
 def open_file(path):
     if os.path.splitext(path)[1] == '.txt':
         root = tk.Tk()
-        text_editor = EditorTextoAplicacion(root)
-        text_editor.abrir_archivo(path)
+        text_editor = TextEditor(root)
+        text_editor.open_file_exp(path)
     elif os.path.splitext(path)[1] == '.mp3':
         root = tk.Tk()
         music_player = MusicPlayer(root)
         music_player.open_file_exp(path)
+    elif os.path.splitext(path)[1] == '.png' or os.path.splitext(path)[1] == '.jpg':
+        root = tk.Tk()
+        image_viewer = ImageViewerApp(root)
+        image_viewer.open_image(path)
     else:
-        print("Archivo no reconocido")
+        print("File not recognized")
 
 
 class Explorer(ck.CTk):
@@ -29,7 +34,7 @@ class Explorer(ck.CTk):
 
         self.session = SessionManager()
 
-        title_label = ck.CTkLabel(self, text=f"Carpetas del Usuario", font=("Roboto", 20))
+        title_label = ck.CTkLabel(self, text=f"User Folders", font=("Roboto", 20))
         title_label.pack(pady=10)
 
         home_image = ck.CTkImage(
@@ -57,7 +62,7 @@ class Explorer(ck.CTk):
         for widget in self.folders_frame.winfo_children():
             if (
                 isinstance(widget, ck.CTkLabel)
-                and widget.cget("text") != "Carpetas del usuario"
+                and widget.cget("text") != "User Folders"
             ):
                 widget.destroy()
 
@@ -73,7 +78,7 @@ class Explorer(ck.CTk):
                     icon_image = icon_image.resize((20, 20))
                     icon_image = ImageTk.PhotoImage(icon_image)
                 except Exception as e:
-                    print(f"Error al cargar la imagen del icono: {e}")
+                    print(f"Error with the image: {e}")
                     icon_image = None
 
                 folder_label = ck.CTkButton(
@@ -94,7 +99,7 @@ class Explorer(ck.CTk):
                         icon_image = icon_image.resize((20, 20))
                         icon_image = ImageTk.PhotoImage(icon_image)
                     except Exception as e:
-                        print(f"Error al cargar la imagen del icono: {e}")
+                        print(f"Error with the image: {e}")
                         icon_image = None
                     self.create_button(folder, icon_image, folder_path)
                 elif os.path.splitext(folder_path)[1] == ".mp3":
@@ -103,7 +108,7 @@ class Explorer(ck.CTk):
                         icon_image = icon_image.resize((20, 20))
                         icon_image = ImageTk.PhotoImage(icon_image)
                     except Exception as e:
-                        print(f"Error al cargar la imagen del icono: {e}")
+                        print(f"Error with the image: {e}")
                         icon_image = None
                     self.create_button(folder, icon_image, folder_path)
                 elif os.path.splitext(folder_path)[1] == ".png" or os.path.splitext(folder_path)[1] == ".jpg":
@@ -112,7 +117,7 @@ class Explorer(ck.CTk):
                         icon_image = icon_image.resize((20, 20))
                         icon_image = ImageTk.PhotoImage(icon_image)
                     except Exception as e:
-                        print(f"Error al cargar la imagen del icono: {e}")
+                        print(f"Error with the image: {e}")
                         icon_image = None
                     self.create_button(folder, icon_image, folder_path)
                 elif os.path.splitext(folder_path)[1] == ".mp4":
@@ -121,13 +126,13 @@ class Explorer(ck.CTk):
                         icon_image = icon_image.resize((20, 20))
                         icon_image = ImageTk.PhotoImage(icon_image)
                     except Exception as e:
-                        print(f"Error al cargar la imagen del icono: {e}")
+                        print(f"Error with the image: {e}")
                         icon_image = None
                     self.create_button(folder, icon_image, folder_path)
                 else:
-                    ck.CTkLabel(self.folders_frame, compound="center", text="Archivo no reconocido").pack()
+                    ck.CTkLabel(self.folders_frame, compound="center", text="File not recognized").pack()
             else:
-                ck.CTkLabel(self.folders_frame, compound="center", text="No hay archivos o carpetas en esta ruta").pack()
+                ck.CTkLabel(self.folders_frame, compound="center", text="No files or folders").pack()
 
     def create_button(self, folder, img, path):
         folder_label = ck.CTkButton(
@@ -147,8 +152,6 @@ class Explorer(ck.CTk):
             widget.destroy()
         if os.path.isdir(path):
             self.display_folders(path)
-        else:
-            print("No se puede abrir, no es una carpeta.")
 
     def validate_session(self):
         info = self.session.load_session()

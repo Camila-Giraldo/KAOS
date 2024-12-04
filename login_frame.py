@@ -123,11 +123,11 @@ class LoginFrame(ck.CTkFrame):
 
     def create_principal_folders(self, path):
         base_folders = [
-            "Descargas",
-            "Documentos",
-            "Música",
-            "Imágenes",
-            "Escritorio",
+            "Downloads",
+            "Documents",
+            "Music",
+            "Images",
+            "Desktop",
             "Videos",
         ]
 

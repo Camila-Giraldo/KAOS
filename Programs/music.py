@@ -12,7 +12,7 @@ class MusicPlayer(tkinter.Frame):
     def __init__(self, root):
         super().__init__(root)
         self.root = root
-        self.root.title('Reproductor de Música')
+        self.root.title('Music Player')
         self.root.config(bg='black')
         self.root.geometry("430x400")
         self.root.resizable(False, False)
@@ -95,7 +95,7 @@ class MusicPlayer(tkinter.Frame):
         if data:
             last_user, last_path = list(data.items())[-1]
             self.direction = filedialog.askopenfilenames(
-                initialdir=last_path, title='Escoger la canción(es)',
+                initialdir=last_path, title='Choose the song(s)',
                 filetypes=(('mp3 files', '*.mp3*'), ('All files', '*.*'))
             )
         self.pos = 0

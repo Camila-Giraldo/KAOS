@@ -8,7 +8,7 @@ from SessionManager import SessionManager
 class VideoPlayer(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Reproductor de Video")
+        self.setWindowTitle("Video Player")
         self.setGeometry(100, 100, 800, 600)
 
         self.session = SessionManager()
@@ -32,8 +32,9 @@ class VideoPlayer(QMainWindow):
         data = self.session.load_session()
         init_dir = ""
         if data:
+
             last_user, init_dir = list(data.items())[-1]
-        file_path, _ = QFileDialog.getOpenFileName(self, "Abrir Video", init_dir, "Archivos de Video (*.mp4 *.avi *.mkv)")
+        file_path, _ = QFileDialog.getOpenFileName(self, "Open Video", init_dir, "Archivos de Video (*.mp4 *.avi *.mkv)")
         if file_path:
             self.media_player.setMedia(QMediaContent(QUrl.fromLocalFile(file_path)))
             self.media_player.play()

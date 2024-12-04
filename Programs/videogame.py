@@ -67,7 +67,7 @@ def display_winner(winner):
         SCREEN.blit(WIN_IMG[winner], WIN_IMG[winner].get_rect(center=(WIDTH // 2, HEIGHT // 2)))
     elif winner == "DRAW":
         font = pygame.font.Font(None, 80)
-        text = font.render("¡Empate!", True, (255, 0, 0))
+        text = font.render("¡Draw!", True, (255, 0, 0))
         SCREEN.blit(text, text.get_rect(center=(WIDTH // 2, HEIGHT // 2)))
     pygame.display.update()
     pygame.time.delay(2000)

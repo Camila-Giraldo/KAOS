@@ -15,7 +15,7 @@ class Programs:
                 process = subprocess.Popen(["python", path])
                 self.processes[program_name] = process
             except Exception as e:
-                print(f"Error al iniciar {program_name}: {e}")
+                print(f"Error to start {program_name}: {e}")
 
     def list_active_processes(self):
         """Devuelve un diccionario de procesos activos y su estado."""
@@ -30,7 +30,7 @@ class Programs:
             process.terminate()
             return f"{program_name.capitalize()} Finished."
         else:
-            return f"{program_name.capitalize()} no está activo o ya ha finalizado."
+            return f"{program_name.capitalize()} is not active."
 
     def terminate_all(self):
         for name, process in self.processes.items():
@@ -66,12 +66,12 @@ class TaskManagerGUI(ctk.CTk):
     def __init__(self, programs):
         super().__init__()
         self.programs = programs
-        self.title("Administrador de Tareas")
+        self.title("Task Administrator")
         self.geometry("400x400")
 
         # Crear widgets
         self.label_title = ctk.CTkLabel(
-            self, text="Administrador de Tareas", font=("Arial", 16)
+            self, text="Task Administrator", font=("Arial", 16)
         )
         self.label_title.pack(pady=10)
 
@@ -79,7 +79,7 @@ class TaskManagerGUI(ctk.CTk):
         self.process_listbox.pack(pady=10)
 
         self.button_refresh = ctk.CTkButton(
-            self, text="Actualizar", command=self.refresh_processes
+            self, text="Update", command=self.refresh_processes
         )
         self.button_refresh.pack(pady=5)
 
